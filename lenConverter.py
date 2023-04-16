@@ -3,7 +3,7 @@ import tkinter as tk
 
 res = 0
 
-def Convert():#Перевод едениц
+def convert():#Перевод едениц
     global res
     # Получаем значение из текстового поля ввода
     UserInputValue = UserInput.get('1.0', 'end-1c')
@@ -11,9 +11,8 @@ def Convert():#Перевод едениц
     # Если поле ввода пустое, то просто возвращаемся
     if not UserInputValue:
         return
-    if UV.isdigit() == True or UV == ".":
-        # Преобразуем введенное значение в число с плавающей точкой
-        UserInputValue = float(UserInputValue)
+    # Преобразуем введенное значение в число с плавающей точкой
+    UserInputValue = float(UserInputValue)
         
     # С помощью двух переменных определяем единицы измерения, из которых идет перевод и в какие единицы нужно перевести
     if variable.get() == variable2.get():
@@ -38,9 +37,9 @@ def Convert():#Перевод едениц
 
 
 # Функция для обновления поля с результатом перевода
-def UpdateResult(event=None):
+def update_result(event=None):
     # Получаем результат перевода
-    result = Convert() 
+    result = convert() 
     # Если результат не получен, то выводим сообщение об ошибке
     if result is None:
         Result.config(text="Invalid input")
@@ -49,7 +48,7 @@ def UpdateResult(event=None):
         Result.config(text=f"Result: {result:.2f} {variable2.get()}")
 
 # Функция для обновления единиц измерения при смене типа конвертации
-def UpdateType(options):
+def update_type(options):
     # Если выбран тип "Время", то опции меню должны быть соответствующие
     if MainOp.get() == "Time":
         options = ["Seconds", "Minutes", "Hours", "Days"]
@@ -65,6 +64,10 @@ def UpdateType(options):
     variable.set(options[0])
     variable2.set(options[0])
 
+def check_keys(event):
+    if event.char.isdigit() == False:
+        return "break"
+
 def InputCorrettion():
     UserInputValue = UserInput.get('1.0', 'end-1c')
 
@@ -78,7 +81,8 @@ window.title('Converter')
 # Создаем надписи и текстовое поле для ввода значения
 MainText = tk.Label(window, text='Converter', font='Calibri 28')
 UserInput = tk.Text(window, height=1, width=26, wrap='none')
-UserInput.bind("<KeyRelease>", UpdateResult)
+UserInput.bind("<Key>", check_keys)
+UserInput.bind("<KeyRelease>", update_result)
 
 # Создаем выпадающие списки с единицами измерения
 options = ["Kilometers", "Meters", "Centimeters"]
@@ -103,17 +107,17 @@ variable2.set(options[0])
 MainOp.set(MainOptions[0]) 
 
 # создание первого выпадающего меню для выбора единиц измерения
-option_menu1 = tk.OptionMenu(window, variable, *options, command=UpdateResult) 
+option_menu1 = tk.OptionMenu(window, variable, *options, command=update_result) 
 # настройка ширины и состояния первого выпадающего меню
 option_menu1.config(width=10, state="normal") 
 
 # создание второго выпадающего меню для выбора единиц измерения
-option_menu2 = tk.OptionMenu(window, variable2, *options, command=UpdateResult) 
+option_menu2 = tk.OptionMenu(window, variable2, *options, command=update_result) 
 # настройка ширины и состояния второго выпадающего меню
 option_menu2.config(width=10, state="normal") 
 
 # создание выпадающего меню для выбора категории конвертации
-MM = tk.OptionMenu(window, MainOp, *MainOptions, command=UpdateType)
+MM = tk.OptionMenu(window, MainOp, *MainOptions, command=update_type)
 #print(UpdateType(options))
 
 # настройка ширины и состояния выпадающего меню
