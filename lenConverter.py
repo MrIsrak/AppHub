@@ -2,6 +2,7 @@
 import tkinter as tk
 res = 0
 def Convert():#Перевод едениц
+    global res
     # Получаем значение из текстового поля ввода
     UserInputValue = UserInput.get('1.0', 'end-1c')
     # Если поле ввода пустое, то просто возвращаемся
@@ -9,6 +10,7 @@ def Convert():#Перевод едениц
         return
     # Преобразуем введенное значение в число с плавающей точкой
     UserInputValue = float(UserInputValue)
+    print(UserInputValue)
     # С помощью двух переменных определяем единицы измерения, из которых идет перевод и в какие единицы нужно перевести
     if variable.get() == variable2.get():
         res =  UserInputValue
@@ -16,6 +18,7 @@ def Convert():#Перевод едениц
         res =  UserInputValue * 1000
     elif variable.get() == "Километры" and variable2.get() == "Сантиметры":
         res =  UserInputValue * 100000
+
     elif variable.get() == "Метры" and variable2.get() == "Километры":
         res =  UserInputValue / 1000
     elif variable.get() == "Метры" and variable2.get() == "Сантиметры":
@@ -26,20 +29,18 @@ def Convert():#Перевод едениц
         res =  UserInputValue / 100
     else:
         Result.config(text="Invalid input")
-        return None
+        print(res)
+        return res
     return res
 
 # Функция для обновления поля с результатом перевода
 def UpdateResult(event=None):
     global res
-    # Если результат перевода является целым числом, то преобразуем его в целое число
-    if result is not None:
-        lblResult.config(text="{:.2f} inches".format(result))
-        if Convert() == int(Convert()):
-            lblResult.config(text="{:.0f} inches".format(result))
-
     # Получаем результат перевода
     result = Convert()
+    # Если результат перевода является целым числом, то преобразуем его в целое число
+
+    
     # Если результат не получен, то выводим сообщение об ошибке
     if result is None:
         Result.config(text="Invalid input")
