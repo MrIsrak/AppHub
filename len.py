@@ -1,6 +1,8 @@
 # Импортируем модуль tkinter
 import tkinter as tk
+
 res = 0
+
 def Convert():#Перевод едениц
     # Получаем значение из текстового поля ввода
     UserInputValue = UserInput.get('1.0', 'end-1c')
@@ -11,35 +13,33 @@ def Convert():#Перевод едениц
     UserInputValue = float(UserInputValue)
     # С помощью двух переменных определяем единицы измерения, из которых идет перевод и в какие единицы нужно перевести
     if variable.get() == variable2.get():
-        res =  UserInputValue
+        return UserInputValue
     elif variable.get() == "Километры" and variable2.get() == "Метры":
-        res =  UserInputValue * 1000
+        return UserInputValue * 1000
     elif variable.get() == "Километры" and variable2.get() == "Сантиметры":
-        res =  UserInputValue * 100000
+        return UserInputValue * 100000
     elif variable.get() == "Метры" and variable2.get() == "Километры":
-        res =  UserInputValue / 1000
+        return UserInputValue / 1000
     elif variable.get() == "Метры" and variable2.get() == "Сантиметры":
-        res =  UserInputValue * 100
+        return UserInputValue * 100
     elif variable.get() == "Сантиметры" and variable2.get() == "Километры":
-        res =  UserInputValue / 100000
+        return UserInputValue / 100000
     elif variable.get() == "Сантиметры" and variable2.get() == "Метры":
-        res =  UserInputValue / 100
+        return UserInputValue / 100
     else:
-        Result.config(text="Invalid input")
         return None
-    return res
 
 # Функция для обновления поля с результатом перевода
 def UpdateResult(event=None):
-    global res
-    # Если результат перевода является целым числом, то преобразуем его в целое число
-    if result is not None:
-        lblResult.config(text="{:.2f} inches".format(result))
-        if Convert() == int(Convert()):
-            lblResult.config(text="{:.0f} inches".format(result))
-
-    # Получаем результат перевода
     result = Convert()
+    # Если результат перевода является целым числом, то преобразуем его в целое число
+    if result == int(result):
+        result() == int(result)
+    # Если результат перевода не является целым числом, то выводим сообщение об ошибке
+    else:
+        Result.config(text="Invalid input")
+    # Получаем результат перевода
+    
     # Если результат не получен, то выводим сообщение об ошибке
     if result is None:
         Result.config(text="Invalid input")
@@ -83,8 +83,8 @@ UserInput.bind("<KeyRelease>", UpdateResult)
 options = ["Kilometers", "Meters", "Centimeters"]
 MainOptions = ["Lenght", "Time", "Mass"]
 
+#Создаем Label для вывода результата
 Result = tk.Label(window, text='Result: ' + str(res), font='Calibri 14', wraplength=400)
-
 
 # создание строковой переменной для первого выпадающего меню
 variable = tk.StringVar(window) 
@@ -101,6 +101,11 @@ variable2.set(options[0])
 # установка начального значения для главного выпадающего меню
 MainOp.set(MainOptions[0]) 
 
+# создание выпадающего меню для выбора категории конвертации
+MM = tk.OptionMenu(window, MainOp, *MainOptions, command=UpdateType) 
+# настройка ширины и состояния выпадающего меню
+MM.config(width=28, state="normal") 
+
 # создание первого выпадающего меню для выбора единиц измерения
 option_menu1 = tk.OptionMenu(window, variable, *options, command=UpdateResult) 
 # настройка ширины и состояния первого выпадающего меню
@@ -110,15 +115,6 @@ option_menu1.config(width=10, state="normal")
 option_menu2 = tk.OptionMenu(window, variable2, *options, command=UpdateResult) 
 # настройка ширины и состояния второго выпадающего меню
 option_menu2.config(width=10, state="normal") 
-
-# создание выпадающего меню для выбора категории конвертации
-MM = tk.OptionMenu(window, MainOp, *MainOptions, command=UpdateType)
-#print(UpdateType(options))
-
-# настройка ширины и состояния выпадающего меню
-MM.config(width=28, state="normal") 
-
-
 
 # размещение заголовка окна в определенном месте
 MainText.place(x=125, y=15) 
