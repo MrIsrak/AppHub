@@ -1,37 +1,39 @@
 # Импортируем модуль tkinter
 import tkinter as tk
+
 res = 0
+
 def Convert():#Перевод едениц
     global res
     # Получаем значение из текстового поля ввода
     UserInputValue = UserInput.get('1.0', 'end-1c')
+    UV = UserInput.get('1.0', 'end-1c')
     # Если поле ввода пустое, то просто возвращаемся
     if not UserInputValue:
         return
-    # Преобразуем введенное значение в число с плавающей точкой
-    UserInputValue = float(UserInputValue)
-    print(UserInputValue)
+    if UV.isdigit() == True or UV == ".":
+        # Преобразуем введенное значение в число с плавающей точкой
+        UserInputValue = float(UserInputValue)
+        
     # С помощью двух переменных определяем единицы измерения, из которых идет перевод и в какие единицы нужно перевести
     if variable.get() == variable2.get():
         res =  UserInputValue
-    elif variable.get() == "Километры" and variable2.get() == "Метры":
+    elif variable.get() == "Kilometers" and variable2.get() == "Meters":
         res =  UserInputValue * 1000
-    elif variable.get() == "Километры" and variable2.get() == "Сантиметры":
+    elif variable.get() == "Kilometers" and variable2.get() == "Centimeters":
         res =  UserInputValue * 100000
-
-    elif variable.get() == "Метры" and variable2.get() == "Километры":
+    elif variable.get() == "Meters" and variable2.get() == "Kilometers":
         res =  UserInputValue / 1000
-    elif variable.get() == "Метры" and variable2.get() == "Сантиметры":
+    elif variable.get() == "Meters" and variable2.get() == "Centimeters":
         res =  UserInputValue * 100
-    elif variable.get() == "Сантиметры" and variable2.get() == "Километры":
+    elif variable.get() == "Centimeters" and variable2.get() == "Kilometers":
         res =  UserInputValue / 100000
-    elif variable.get() == "Сантиметры" and variable2.get() == "Метры":
+    elif variable.get() == "Centimeters" and variable2.get() == "Meters":
         res =  UserInputValue / 100
     else:
         Result.config(text="Invalid input")
         return None
     Result.config(text=f"Result: {res:.2f} {variable2.get()}")
-    print(res)
     return res
 
 
