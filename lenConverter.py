@@ -1,6 +1,6 @@
 # Импортируем модуль tkinter
 import tkinter as tk
-
+res = 0
 def Convert():#Перевод едениц
     # Получаем значение из текстового поля ввода
     UserInputValue = UserInput.get('1.0', 'end-1c')
@@ -11,27 +11,29 @@ def Convert():#Перевод едениц
     UserInputValue = float(UserInputValue)
     # С помощью двух переменных определяем единицы измерения, из которых идет перевод и в какие единицы нужно перевести
     if variable.get() == variable2.get():
-        return UserInputValue
+        res =  UserInputValue
     elif variable.get() == "Километры" and variable2.get() == "Метры":
-        return UserInputValue * 1000
+        res =  UserInputValue * 1000
     elif variable.get() == "Километры" and variable2.get() == "Сантиметры":
-        return UserInputValue * 100000
+        res =  UserInputValue * 100000
     elif variable.get() == "Метры" and variable2.get() == "Километры":
-        return UserInputValue / 1000
+        res =  UserInputValue / 1000
     elif variable.get() == "Метры" and variable2.get() == "Сантиметры":
-        return UserInputValue * 100
+        res =  UserInputValue * 100
     elif variable.get() == "Сантиметры" and variable2.get() == "Километры":
-        return UserInputValue / 100000
+        res =  UserInputValue / 100000
     elif variable.get() == "Сантиметры" and variable2.get() == "Метры":
-        return UserInputValue / 100
+        res =  UserInputValue / 100
     else:
         return None
+    return res
 
 # Функция для обновления поля с результатом перевода
 def UpdateResult(event=None):
+    global res
     # Если результат перевода является целым числом, то преобразуем его в целое число
     if Convert() == int(Convert()):
-        Convert() == int(Convert())
+        res = int(Convert())
     # Получаем результат перевода
     result = Convert()
     # Если результат не получен, то выводим сообщение об ошибке
@@ -77,6 +79,7 @@ UserInput.bind("<KeyRelease>", UpdateResult)
 options = ["Kilometers", "Meters", "Centimeters"]
 MainOptions = ["Lenght", "Time", "Mass"]
 
+Result = tk.Label(window, text='Result: ' + str(res), font='Calibri 14', wraplength=400)
 
 
 # создание строковой переменной для первого выпадающего меню
@@ -94,11 +97,6 @@ variable2.set(options[0])
 # установка начального значения для главного выпадающего меню
 MainOp.set(MainOptions[0]) 
 
-# создание выпадающего меню для выбора категории конвертации
-MM = tk.OptionMenu(window, MainOp, *MainOptions, command=UpdateType) 
-# настройка ширины и состояния выпадающего меню
-MM.config(width=28, state="normal") 
-
 # создание первого выпадающего меню для выбора единиц измерения
 option_menu1 = tk.OptionMenu(window, variable, *options, command=UpdateResult) 
 # настройка ширины и состояния первого выпадающего меню
@@ -108,6 +106,15 @@ option_menu1.config(width=10, state="normal")
 option_menu2 = tk.OptionMenu(window, variable2, *options, command=UpdateResult) 
 # настройка ширины и состояния второго выпадающего меню
 option_menu2.config(width=10, state="normal") 
+
+# создание выпадающего меню для выбора категории конвертации
+MM = tk.OptionMenu(window, MainOp, *MainOptions, command=UpdateType)
+#print(UpdateType(options))
+
+# настройка ширины и состояния выпадающего меню
+MM.config(width=28, state="normal") 
+
+
 
 # размещение заголовка окна в определенном месте
 MainText.place(x=125, y=15) 
