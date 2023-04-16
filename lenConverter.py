@@ -29,18 +29,16 @@ def Convert():#Перевод едениц
         res =  UserInputValue / 100
     else:
         Result.config(text="Invalid input")
-        print(res)
-        return res
+        return None
+    Result.config(text=f"Result: {res:.2f} {variable2.get()}")
+    print(res)
     return res
+
 
 # Функция для обновления поля с результатом перевода
 def UpdateResult(event=None):
-    global res
     # Получаем результат перевода
-    result = Convert()
-    # Если результат перевода является целым числом, то преобразуем его в целое число
-
-    
+    result = Convert() 
     # Если результат не получен, то выводим сообщение об ошибке
     if result is None:
         Result.config(text="Invalid input")
