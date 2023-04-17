@@ -34,17 +34,17 @@ def convert():#Перевод едениц
     elif variable.get() == "Seconds" and variable2.get() == "Minutes":
         res = UserInputValue / 60
     elif variable.get() == "Seconds" and variable2.get() == "Hours":
-        res = UserInputValue * 3600
+        res = UserInputValue / 3600
     elif variable.get() == "Seconds" and variable2.get() == "Days":
-        res = UserInputValue * 86400
+        res = UserInputValue / 86400
     elif variable.get() == "Minutes" and variable2.get() == "Seconds":
         res = UserInputValue * 60
     elif variable.get() == "Minutes" and variable2.get() == "Hours":
         res = UserInputValue / 60
     elif variable.get() == "Minutes" and variable2.get() == "Days":
-        res = UserInputValue * 1140
+        res = UserInputValue / 1140
     elif variable.get() == "Hours" and variable2.get() == "Seconds":
-        res = UserInputValue / 3600
+        res = UserInputValue * 3600
     elif variable.get() == "Hours" and variable2.get() == "Minutes":
         res = UserInputValue * 60
     elif variable.get() == "Hours" and variable2.get() == "Days":
@@ -57,29 +57,29 @@ def convert():#Перевод едениц
         res = UserInputValue * 24
     ##############
     elif variable.get() == "Grams" and variable2.get() == "Kilograms":
-        res = UserInputValue * 1000
+        res = UserInputValue / 1000
     elif variable.get() == "Grams" and variable2.get() == "Centners":
-        res = UserInputValue * 100000
+        res = UserInputValue / 100000
     elif variable.get() == "Grams" and variable2.get() == "Tons":
-        res = UserInputValue * 1000000000
+        res = UserInputValue / 1000000000
     elif variable.get() == "Kilograms" and variable2.get() == "Grams":
         res = UserInputValue * 1000
     elif variable.get() == "Kilograms" and variable2.get() == "Centners":
-        res = UserInputValue * 100000
+        res = UserInputValue / 100
     elif variable.get() == "Kilograms" and variable2.get() == "Tons":
-        res = UserInputValue * 1000
+        res = UserInputValue / 1000
     elif variable.get() == "Centners" and variable2.get() == "Grams":
         res = UserInputValue * 100000
     elif variable.get() == "Centners" and variable2.get() == "Kilograms":
-        res = UserInputValue / 100
+        res = UserInputValue * 100
     elif variable.get() == "Centners" and variable2.get() == "Tons":
-        res = UserInputValue / 1000000000
+        res = UserInputValue / 10
     elif variable.get() == "Tons" and variable2.get() == "Grams":
-        res = UserInputValue / 1000000000000
+        res = UserInputValue * 1000000
     elif variable.get() == "Tons" and variable2.get() == "Kilograms":
-        res = UserInputValue / 1000
+        res = UserInputValue * 1000
     elif variable.get() == "Tons" and variable2.get() == "Centners":
-        res = UserInputValue / 100000
+        res = UserInputValue * 100000
     
     else:
         Result.config(text="Invalid input")
@@ -114,13 +114,11 @@ def update_type(options):
     # Удаляем старые опции меню
     option_menu2['menu'].delete(0, 'end')
     option_menu1['menu'].delete(0, 'end')
-    print("Del")
     variable.set(options[0])
     variable2.set(options[0])
     for option in options:
         option_menu1['menu'].add_command(label=option, command=lambda value=option: variable.set(value))
         option_menu2['menu'].add_command(label=option, command=lambda value=option: variable2.set(value))
-    print("Set")
 
 def check_keys(event):
     if event.char.isdigit() == False and not(keyboard.is_pressed('backspace')):
