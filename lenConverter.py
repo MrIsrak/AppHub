@@ -29,6 +29,30 @@ def convert():#Перевод едениц
         res =  UserInputValue / 100000
     elif variable.get() == "Centimeters" and variable2.get() == "Meters":
         res =  UserInputValue / 100
+    elif variable.get() == "Seconds" and variable2.get() == "Minutes":
+        res = UserInputValue / 60
+    elif variable.get() == "Seconds" and variable2.get() == "Hours":
+        res = UserInputValue * 3600
+    elif variable.get() == "Seconds" and variable2.get() == "Days":
+        res = UserInputValue * 86400
+    elif variable.get() == "Minutes" and variable2.get() == "Seconds":
+        res = UserInputValue * 60
+    elif variable.get() == "Minutes" and variable2.get() == "Hours":
+        res = UserInputValue / 60
+    elif variable.get() == "Minutes" and variable2.get() == "Days":
+        res = UserInputValue * 1140
+    elif variable.get() == "Hours" and variable2.get() == "Seconds":
+        res = UserInputValue / 3600
+    elif variable.get() == "Hours" and variable2.get() == "Minutes":
+        res = UserInputValue * 60
+    elif variable.get() == "Hours" and variable2.get() == "Days":
+        res = UserInputValue / 24
+    elif variable.get() == "Days" and variable2.get() == "Seconds":
+        res = UserInputValue * 86400
+    elif variable.get() == "Days" and variable2.get() == "Minutes":
+        res = UserInputValue * 1440
+    elif variable.get() == "Days" and variable2.get() == "Hours":
+        res = UserInputValue * 24
     else:
         Result.config(text="Invalid input")
         return None
