@@ -1,5 +1,6 @@
-# Импортируем модуль tkinter
+# Импортируем модуль tkinter и keyboard
 import tkinter as tk
+import keyboard
 
 res = 0
 
@@ -29,6 +30,7 @@ def convert():#Перевод едениц
         res =  UserInputValue / 100000
     elif variable.get() == "Centimeters" and variable2.get() == "Meters":
         res =  UserInputValue / 100
+    ##########
     elif variable.get() == "Seconds" and variable2.get() == "Minutes":
         res = UserInputValue / 60
     elif variable.get() == "Seconds" and variable2.get() == "Hours":
@@ -53,6 +55,32 @@ def convert():#Перевод едениц
         res = UserInputValue * 1440
     elif variable.get() == "Days" and variable2.get() == "Hours":
         res = UserInputValue * 24
+    ##############
+    elif variable.get() == "Grams" and variable2.get() == "Kilograms":
+        res = UserInputValue * 1000
+    elif variable.get() == "Grams" and variable2.get() == "Centners":
+        res = UserInputValue * 100000
+    elif variable.get() == "Grams" and variable2.get() == "Tons":
+        res = UserInputValue * 1000000000
+    elif variable.get() == "Kilograms" and variable2.get() == "Grams":
+        res = UserInputValue * 1000
+    elif variable.get() == "Kilograms" and variable2.get() == "Centners":
+        res = UserInputValue * 100000
+    elif variable.get() == "Kilograms" and variable2.get() == "Tons":
+        res = UserInputValue * 1000
+    elif variable.get() == "Centners" and variable2.get() == "Grams":
+        res = UserInputValue * 100000
+    elif variable.get() == "Centners" and variable2.get() == "Kilograms":
+        res = UserInputValue / 100
+    elif variable.get() == "Centners" and variable2.get() == "Tons":
+        res = UserInputValue / 1000000000
+    elif variable.get() == "Tons" and variable2.get() == "Grams":
+        res = UserInputValue / 1000000000000
+    elif variable.get() == "Tons" and variable2.get() == "Kilograms":
+        res = UserInputValue / 1000
+    elif variable.get() == "Tons" and variable2.get() == "Centners":
+        res = UserInputValue / 100000
+    
     else:
         Result.config(text="Invalid input")
         return None
@@ -75,6 +103,7 @@ def update_result(event=None):
 def update_type(options):
     # Если выбран тип "Время", то опции меню должны быть соответствующие
     if MainOp.get() == "Time":
+        print("Time")
         options = ["Seconds", "Minutes", "Hours", "Days"]
     # Если выбран тип "Масса", то опции меню должны быть соответствующие
     elif MainOp.get() == "Mass":
@@ -85,11 +114,16 @@ def update_type(options):
     # Удаляем старые опции меню
     option_menu2['menu'].delete(0, 'end')
     option_menu1['menu'].delete(0, 'end')
+    print("Del")
     variable.set(options[0])
     variable2.set(options[0])
+    for option in options:
+        option_menu1['menu'].add_command(label=option, command=lambda value=option: variable.set(value))
+        option_menu2['menu'].add_command(label=option, command=lambda value=option: variable2.set(value))
+    print("Set")
 
 def check_keys(event):
-    if event.char.isdigit() == False:
+    if event.char.isdigit() == False and not(keyboard.is_pressed('backspace')):
         return "break"
 
 def InputCorrettion():
