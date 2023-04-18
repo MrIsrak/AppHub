@@ -102,15 +102,17 @@ def update_result(event=None):
 # Функция для обновления единиц измерения при смене типа конвертации
 def update_type(options):
     # Если выбран тип "Время", то опции меню должны быть соответствующие
-    if MainOp.get() == "Time":
-        print("Time")
+    if MainOp.get() == "Time": 
         options = ["Seconds", "Minutes", "Hours", "Days"]
+        update_result()
     # Если выбран тип "Масса", то опции меню должны быть соответствующие
     elif MainOp.get() == "Mass":
         options = ["Grams", "Kilograms", "Cantners", "Tons"]
+        update_result()
     # Иначе опции меню должны быть по умолчанию
     else:
         options = ["Kilometers", "Meters", "Centimeters"]
+        update_result()
     # Удаляем старые опции меню
     option_menu2['menu'].delete(0, 'end')
     option_menu1['menu'].delete(0, 'end')
@@ -121,13 +123,8 @@ def update_type(options):
         option_menu2['menu'].add_command(label=option, command=lambda value=option: variable2.set(value))
 
 def check_keys(event):
-    if event.char.isdigit() == False and not(keyboard.is_pressed('backspace')):
+    if event.char.isdigit() == False and not(keyboard.is_pressed('backspace')) and not(keyboard.is_pressed('.')):
         return "break"
-
-def InputCorrettion():
-    UserInputValue = UserInput.get('1.0', 'end-1c')
-
-
 
 # Создаем графическое окно
 window = tk.Tk()
@@ -137,6 +134,9 @@ window.title('Converter')
 # Создаем надписи и текстовое поле для ввода значения
 MainText = tk.Label(window, text='Converter', font='Calibri 28')
 UserInput = tk.Text(window, height=1, width=26, wrap='none')
+if keyboard.is_pressed('enter'):
+    update_result()
+
 UserInput.bind("<Key>", check_keys)
 UserInput.bind("<KeyRelease>", update_result)
 
