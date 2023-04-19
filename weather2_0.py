@@ -6,6 +6,33 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from meteostat import Point, Daily
 
+def get_weather(enter_your_city):
+    geolocator = Nominatim(user_agent="my_app")
+    location = geolocator.geocode(enter_your_city_
+    str.cget())
+
+    # getting date
+    current_date = datetime.now()
+    today = datetime(current_date.year, current_date.month, current_date.day)
+    tomorrow = today + timedelta(days=1)
+
+    #geting location
+    locationP = Point(location.latitude, location.longitude)
+
+
+    # geting list of stations
+    stations = Stations()
+    stations = stations.nearby(location.latitude, location.longitude)
+
+    # geting weather data
+    data = Daily(locationP, today, tomorrow)
+    data = data.fetch()
+
+    # Plot line chart including average, minimum and maximum temperature
+    data.plot(y=['tavg', 'tmin', 'tmax'])
+    plt.show()
+
+
 
 #theme settings
 customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
@@ -15,10 +42,6 @@ customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-bl
 window = customtkinter.CTk()  # create CTk window like you do with the Tk window
 window.geometry("1200x700")
 
-#create frames
-daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
-
-
 #text configuration
 Wfont=customtkinter.CTkFont(family='Arial', size=24)
 Wfont=('Arial', 36)
@@ -26,9 +49,17 @@ Wfont=('Arial', 36)
 defoult = customtkinter.CTkFont(family='Calibri', size=14)
 defoult=('Calibri', 14)
 
+
+#create frames
+daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
+
 #create labels
 main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
 enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city",font=defoult)
+
+#create buttons
+show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=get_weather(enter_your_city))
+
 
 #create entry
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
@@ -36,8 +67,14 @@ city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
 #place entry
 city_entry.place(in_=daily_weather,x=80,y=40)
 
+#place buttons in windows
+show_weather.place(in_=daily_weather,x=80,y=80)
+
 #place frames in window
 daily_weather.place(relx=0,rely=0)
+
+
+
 
 #place labels in windows
 main_text.place(x=579,y=0)
