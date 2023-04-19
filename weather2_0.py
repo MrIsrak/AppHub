@@ -1,8 +1,11 @@
+#import modules
 import tkinter
 import customtkinter
-import python_weather
-import asyncio
-import os
+from geopy.geocoders import Nominatim
+from datetime import datetime
+import matplotlib.pyplot as plt
+from meteostat import Point, Daily
+
 
 #theme settings
 customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
