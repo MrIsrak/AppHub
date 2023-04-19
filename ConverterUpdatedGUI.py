@@ -133,7 +133,7 @@ window.geometry('400x300+760+300')
 window.title('Converter')
 
 # Создаем надписи и текстовое поле для ввода значения
-MainText = tk.Label(window, text='Converter', font='Calibri 28')
+MainText = tk.Label(window, text='Converter', font='Calibri 28')    
 UserInput = tk.Text(window, height=1, width=26, wrap='none')
 if keyboard.is_pressed('enter'):
     update_result()
