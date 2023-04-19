@@ -15,14 +15,16 @@ window.geometry("1200x700")
 #create frames
 daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
 
-#create labels
-font=customtkinter.CTkFont(family='Arial', size=24)
-font=('Arial', 24)
 
-main_text = customtkinter.CTkLabel(master=window, text="Weather",)
+#text configuration
+Wfont=customtkinter.CTkFont(family='Arial', size=24)
+Wfont=('Arial', 36)
+
+#create labels
+main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
 
 #place frames in window
-#daily_weather.place(relx=0,rely=0)
+daily_weather.place(relx=0,rely=0)
 main_text.place(x=579,y=0)
 
 
