@@ -5,19 +5,18 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 import numpy as np
 
+
+#Получаем локацию (Здесь строкой)
 geolocator = Nominatim(user_agent="my_app")
 location = geolocator.geocode("Санкт-Петербург")
 
-
-
-#today = datetime.now().date()
-#tomorrow = today + timedelta(days=1)
+#Получаем время
 current_date = datetime.now()
 today = datetime(current_date.year, current_date.month, current_date.day)
 
 tomorrow = today + timedelta(days=1)
 
-
+#Вводим координаты в переменную для погоды 
 locationP = Point(location.latitude, location.longitude)
 
 
@@ -25,10 +24,10 @@ locationP = Point(location.latitude, location.longitude)
 stations = Stations()
 stations = stations.nearby(location.latitude, location.longitude)
 
-# Получаем данные о погоде за последние 365 дней
+# Получаем данные о погоде 
 data = Daily(locationP, today, tomorrow)
 data = data.fetch()
 
-# Plot line chart including average, minimum and maximum temperature
+# рисуем график
 data.plot(y=['tavg', 'tmin', 'tmax'])
 plt.show()
