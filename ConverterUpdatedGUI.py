@@ -1,3 +1,4 @@
+import ttkbootstrap as ttk
 # Импортируем модуль tkinter и keyboard
 import tkinter as tk
 import keyboard
@@ -127,12 +128,12 @@ def check_keys(event):
         return "break"
 
 # Создаем графическое окно
-window = tk.Tk()
+window = ttk.Window(themename="cerculean")
 window.geometry('400x300+760+300')
 window.title('Converter')
 
 # Создаем надписи и текстовое поле для ввода значения
-MainText = tk.Label(window, text='Converter', font='Calibri 28')
+MainText = tk.Label(window, text='Converter', font='Calibri 28')    
 UserInput = tk.Text(window, height=1, width=26, wrap='none')
 if keyboard.is_pressed('enter'):
     update_result()
@@ -165,33 +166,32 @@ MainOp.set(MainOptions[0])
 # создание первого выпадающего меню для выбора единиц измерения
 option_menu1 = tk.OptionMenu(window, variable, *options, command=update_result) 
 # настройка ширины и состояния первого выпадающего меню
-option_menu1.config(width=10, state="normal") 
+option_menu1.config(width=8, state="normal") 
 
 # создание второго выпадающего меню для выбора единиц измерения
 option_menu2 = tk.OptionMenu(window, variable2, *options, command=update_result) 
 # настройка ширины и состояния второго выпадающего меню
-option_menu2.config(width=10, state="normal") 
+option_menu2.config(width=8, state="normal") 
 
 # создание выпадающего меню для выбора категории конвертации
 MM = tk.OptionMenu(window, MainOp, *MainOptions, command=update_type)
-#print(UpdateType(options))
 
 # настройка ширины и состояния выпадающего меню
-MM.config(width=28, state="normal") 
+MM.config(width=22, state="normal") 
 
 
 
 # размещение заголовка окна в определенном месте
-MainText.place(x=125, y=15) 
+MainText.place(x=100, y=15) 
 # размещение поля ввода пользовательских данных в определенном месте
-UserInput.place(x=90, y=120) 
+UserInput.place(x=91, y=115) 
 # размещение выпадающего меню выбора категории конвертации в определенном месте
-MM.place(x=90, y=148) 
+MM.place(x=88, y=154) 
 # размещение результата конвертации в определенном месте
-Result.place(x=88, y=220) 
+Result.place(x=88, y=230) 
 # размещение первого выпадающего меню выбора единиц измерения в определенном месте
-option_menu1.place(x=88, y=180) 
+option_menu1.place(x=88, y=185) 
 # размещение второго выпадающего меню выбора единиц измерения в определенном месте
-option_menu2.place(x=198, y=180) 
+option_menu2.place(x=199, y=185) 
 # запуск основного цикла обработки событий окна (ожидание пользовательского ввода)
 window.mainloop()
