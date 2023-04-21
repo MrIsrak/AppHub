@@ -6,10 +6,16 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from meteostat import Point, Daily
 
+
+#showing the weather information
 def get_weather(enter_your_city):
+    #entering the city name
+    user_text = enter_your_city.text
+    
+    #initialazing the location data
     geolocator = Nominatim(user_agent="my_app")
-    location = geolocator.geocode(enter_your_city_
-    str.cget())
+    
+    location = geolocator.geocode(text)
 
     # getting date
     current_date = datetime.now()
@@ -30,6 +36,7 @@ def get_weather(enter_your_city):
 
     # Plot line chart including average, minimum and maximum temperature
     data.plot(y=['tavg', 'tmin', 'tmax'])
+    
     plt.show()
 
 
@@ -58,7 +65,7 @@ main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
 enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city",font=defoult)
 
 #create buttons
-show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=get_weather(enter_your_city))
+show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather)
 
 
 #create entry
