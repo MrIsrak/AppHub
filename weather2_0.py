@@ -1,6 +1,8 @@
 #import modules
 import tkinter
 import customtkinter
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 
 #showing the weather information
@@ -27,7 +29,6 @@ def get_weather(enter_your_city):
     #geting location
     location_p = Point(location.latitude, location.longitude)
 
-
     # geting list of stations
     stations = Stations()
     stations = stations.nearby(location.latitude, location.longitude)
@@ -37,9 +38,15 @@ def get_weather(enter_your_city):
     data = data.fetch()
 
     # Plot line chart including average, minimum and maximum temperature
-    data.plot(y=['tavg', 'tmin', 'tmax'])
-
-    plt.show()
+    fig = Figure(figsize=(5, 4), dpi=100)
+    ax = fig.add_subplot(111)
+    data.plot(y=['tavg', 'tmin', 'tmax'], ax=ax)
+    
+    # Embed the plot in the Tkinter window
+    canvas.figure = fig
+    canvas.draw()
+    canvas.get_tk_widget().place(in_=window,x=200, y=200)
+    #plt.show()
     
 
 
@@ -73,6 +80,9 @@ show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weat
 
 #create entry
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
+
+#create canvas
+canvas = FigureCanvasTkAgg(Figure(figsize=(5, 4), dpi=100), master=window)
 
 #place entry
 city_entry.place(in_=daily_weather,x=80,y=40)
