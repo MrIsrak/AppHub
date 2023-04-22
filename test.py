@@ -22,7 +22,7 @@ locationP = Point(location.latitude, location.longitude)
 
 # Получаем список станций поблизости с указанием daily_start
 stations = Stations()
-stations = stations.Ф(location.latitude, location.longitude)
+stations = stations.nearby(location.latitude, location.longitude)
 
 # Получаем данные о погоде 
 data = Daily(locationP, today, tomorrow)
