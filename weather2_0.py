@@ -1,21 +1,23 @@
 #import modules
 import tkinter
 import customtkinter
-from geopy.geocoders import Nominatim
-from datetime import datetime
-import matplotlib.pyplot as plt
-from meteostat import Point, Daily
 
 
 #showing the weather information
 def get_weather(enter_your_city):
+    #import modules
+    from geopy.geocoders import Nominatim
+    from meteostat import Stations
+    from datetime import datetime, timedelta
+    import matplotlib.pyplot as plt
+    from meteostat import Point, Daily
     #entering the city name
-    user_text = enter_your_city.text
+    user_text = enter_your_city.get()
     
     #initialazing the location data
     geolocator = Nominatim(user_agent="my_app")
     
-    location = geolocator.geocode(text)
+    location = geolocator.geocode(user_text)
 
     # getting date
     current_date = datetime.now()
@@ -23,7 +25,7 @@ def get_weather(enter_your_city):
     tomorrow = today + timedelta(days=1)
 
     #geting location
-    locationP = Point(location.latitude, location.longitude)
+    location_p = Point(location.latitude, location.longitude)
 
 
     # geting list of stations
@@ -31,13 +33,14 @@ def get_weather(enter_your_city):
     stations = stations.nearby(location.latitude, location.longitude)
 
     # geting weather data
-    data = Daily(locationP, today, tomorrow)
+    data = Daily(location_p, today, tomorrow)
     data = data.fetch()
 
     # Plot line chart including average, minimum and maximum temperature
     data.plot(y=['tavg', 'tmin', 'tmax'])
-    
+
     plt.show()
+    
 
 
 
@@ -65,7 +68,7 @@ main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
 enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city",font=defoult)
 
 #create buttons
-show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather)
+show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather(city_entry))
 
 
 #create entry
