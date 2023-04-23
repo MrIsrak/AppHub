@@ -5,6 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 
+
 #showing the weather information
 def get_weather(enter_your_city):
     #import modules
@@ -38,18 +39,22 @@ def get_weather(enter_your_city):
     data = data.fetch()
 
     # Plot line chart including average, minimum and maximum temperature
-    fig = Figure(figsize=(5, 4), dpi=100)
+    fig = Figure(figsize=(4, 3), dpi=90)
+    x = y = range(1, 10)
     ax = fig.add_subplot(111)
     data.plot(y=['tavg', 'tmin', 'tmax'], ax=ax)
     
     # Embed the plot in the Tkinter window
     canvas.figure = fig
     canvas.draw()
-    canvas.get_tk_widget().place(in_=window,x=200, y=200)
-    #plt.show()
+    canvas.get_tk_widget().place(in_=daily_weather,x=6, y=250)
     
 
-
+# #function to clear graph
+# def clear_graph():
+#     global ax, canvas
+#     ax.clear()
+#     canvas.draw()
 
 #theme settings
 customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
@@ -76,19 +81,20 @@ enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your 
 
 #create buttons
 show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather(city_entry))
-
+# clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", command=clear_graph())
 
 #create entry
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
 
 #create canvas
-canvas = FigureCanvasTkAgg(Figure(figsize=(5, 4), dpi=100), master=window)
+canvas = FigureCanvasTkAgg(Figure(figsize=(4, 3), dpi=90), master=window)
 
 #place entry
 city_entry.place(in_=daily_weather,x=80,y=40)
 
 #place buttons in windows
-show_weather.place(in_=daily_weather,x=80,y=80)
+show_weather.place(in_=daily_weather,x=80,y=85)
+# clear_graph.place(in_=daily_weather,x=80,y=120)
 
 #place frames in window
 daily_weather.place(relx=0,rely=0)
