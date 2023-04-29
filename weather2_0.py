@@ -75,6 +75,8 @@ defoult=('Calibri', 14)
 #create frames
 daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
 
+daily_highlight = customtkinter.CTkFrame(master=window, width=880, height=450)
+
 #create labels
 main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
 enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city",font=defoult)
@@ -99,7 +101,7 @@ show_weather.place(in_=daily_weather,x=80,y=85)
 #place frames in window
 daily_weather.place(relx=0,rely=0)
 
-
+daily_highlight.place(x=309,y=245)
 
 
 #place labels in windows
