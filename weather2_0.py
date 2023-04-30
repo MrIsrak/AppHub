@@ -4,8 +4,6 @@ import customtkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-
-
 #showing the weather information
 def get_weather(enter_your_city):
     #import modules
@@ -14,6 +12,9 @@ def get_weather(enter_your_city):
     from datetime import datetime, timedelta
     import matplotlib.pyplot as plt
     from meteostat import Point, Daily
+    
+
+
     #entering the city name
     user_text = enter_your_city.get()
     
@@ -40,7 +41,7 @@ def get_weather(enter_your_city):
 
     # Plot line chart including average, minimum and maximum temperature
     fig = Figure(figsize=(4, 3), dpi=90)
-    #fig.get_tk_widget().configure(background=customtkinter.get_color('blue', 'background'))
+
     x = y = range(1, 10)
     ax = fig.add_subplot(111)
     data.plot(y=['tavg', 'tmin', 'tmax'], ax=ax)
@@ -55,6 +56,7 @@ def clear_graph():
     # Delete all elements on the canvas
     canvas.get_tk_widget().delete("all")
     # Update the canvas
+    canvas.get_tk_widget().configure(background='lightgray')
     canvas.draw()
     
 
@@ -110,8 +112,6 @@ daily_highlight.place(x=309,y=245)
 #place labels in windows
 main_text.place(x=579,y=0)
 enter_your_city.place(x=105,y=10)
-
-
 
 
 window.mainloop()
