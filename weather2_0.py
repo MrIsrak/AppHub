@@ -40,6 +40,7 @@ def get_weather(enter_your_city):
 
     # Plot line chart including average, minimum and maximum temperature
     fig = Figure(figsize=(4, 3), dpi=90)
+    #fig.get_tk_widget().configure(background=customtkinter.get_color('blue', 'background'))
     x = y = range(1, 10)
     ax = fig.add_subplot(111)
     data.plot(y=['tavg', 'tmin', 'tmax'], ax=ax)
@@ -50,11 +51,13 @@ def get_weather(enter_your_city):
     canvas.get_tk_widget().place(in_=daily_weather,x=6, y=250)
     
 
-# #function to clear graph
-# def clear_graph():
-#     global ax, canvas
-#     ax.clear()
-#     canvas.draw()
+def clear_graph():
+    # Delete all elements on the canvas
+    canvas.get_tk_widget().delete("all")
+    # Update the canvas
+    canvas.draw()
+    
+
 
 #theme settings
 customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
@@ -83,7 +86,7 @@ enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your 
 
 #create buttons
 show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather(city_entry))
-# clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", command=clear_graph())
+clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", command=clear_graph)
 
 #create entry
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
@@ -96,7 +99,7 @@ city_entry.place(in_=daily_weather,x=80,y=40)
 
 #place buttons in windows
 show_weather.place(in_=daily_weather,x=80,y=85)
-# clear_graph.place(in_=daily_weather,x=80,y=120)
+clear_graph.place(in_=daily_weather,x=80,y=120)
 
 #place frames in window
 daily_weather.place(relx=0,rely=0)
