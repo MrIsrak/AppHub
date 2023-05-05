@@ -3,18 +3,14 @@ import tkinter
 import customtkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+from geopy.geocoders import Nominatim
+from meteostat import Stations
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+from meteostat import Point, Daily
 
 #showing the weather information
 def get_weather(enter_your_city):
-    #import modules
-    from geopy.geocoders import Nominatim
-    from meteostat import Stations
-    from datetime import datetime, timedelta
-    import matplotlib.pyplot as plt
-    from meteostat import Point, Daily
-    
-
-
     #entering the city name
     user_text = enter_your_city.get()
     
@@ -40,7 +36,7 @@ def get_weather(enter_your_city):
     data = data.fetch()
 
     # Plot line chart including average, minimum and maximum temperature
-    fig = Figure(figsize=(4, 3), dpi=90)
+    fig = Figure(figsize=(3.5, 3), dpi=90)
 
     x = y = range(1, 10)
     ax = fig.add_subplot(111)
@@ -49,8 +45,7 @@ def get_weather(enter_your_city):
     # Embed the plot in the Tkinter window
     canvas.figure = fig
     canvas.draw()
-    canvas.get_tk_widget().place(in_=daily_weather,x=6, y=250)
-    
+    canvas.get_tk_widget().place(in_=daily_weather, x=6, y=250, width=340, height=250)
 
 def clear_graph():
     # Delete all elements on the canvas
@@ -78,9 +73,9 @@ defoult=('Calibri', 14)
 
 
 #create frames
-daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
+daily_weather = customtkinter.CTkFrame(master=window, width=350, height=700)
 
-daily_highlight = customtkinter.CTkFrame(master=window, width=880, height=450)
+daily_highlight = customtkinter.CTkFrame(master=window, width=830, height=450)
 
 #create labels
 main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
@@ -94,7 +89,7 @@ clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", 
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
 
 #create canvas
-canvas = FigureCanvasTkAgg(Figure(figsize=(4, 3), dpi=90), master=window)
+canvas = FigureCanvasTkAgg(Figure(figsize=(3.5, 3), dpi=90), master=window)
 
 #place entry
 city_entry.place(in_=daily_weather,x=80,y=40)
@@ -106,7 +101,7 @@ clear_graph.place(in_=daily_weather,x=80,y=120)
 #place frames in window
 daily_weather.place(relx=0,rely=0)
 
-daily_highlight.place(x=309,y=245)
+daily_highlight.place(x=359,y=245)
 
 
 #place labels in windows
