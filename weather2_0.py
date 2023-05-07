@@ -3,17 +3,14 @@ import tkinter
 import customtkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-
-
+from geopy.geocoders import Nominatim
+from meteostat import Stations
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+from meteostat import Point, Daily
 
 #showing the weather information
 def get_weather(enter_your_city):
-    #import modules
-    from geopy.geocoders import Nominatim
-    from meteostat import Stations
-    from datetime import datetime, timedelta
-    import matplotlib.pyplot as plt
-    from meteostat import Point, Daily
     #entering the city name
     user_text = enter_your_city.get()
     
@@ -39,7 +36,8 @@ def get_weather(enter_your_city):
     data = data.fetch()
 
     # Plot line chart including average, minimum and maximum temperature
-    fig = Figure(figsize=(4, 3), dpi=90)
+    fig = Figure(figsize=(3.5, 3), dpi=90)
+
     x = y = range(1, 10)
     ax = fig.add_subplot(111)
     data.plot(y=['tavg', 'tmin', 'tmax'], ax=ax)
@@ -47,14 +45,17 @@ def get_weather(enter_your_city):
     # Embed the plot in the Tkinter window
     canvas.figure = fig
     canvas.draw()
-    canvas.get_tk_widget().place(in_=daily_weather,x=6, y=250)
+    canvas.get_tk_widget().grid(in_=daily_weather, row=4, column=0, padx=6, pady=4)
+
+def clear_graph():
+    # Delete all elements on the canvas
+    canvas.get_tk_widget().delete("all")
+    # Update the canvas
+    canvas.get_tk_widget().configure(background='lightgray')
+    canvas.draw()
     
 
-# #function to clear graph
-# def clear_graph():
-#     global ax, canvas
-#     ax.clear()
-#     canvas.draw()
+
 
 #theme settings
 customtkinter.set_appearance_mode("light")  # Modes: system (default), light, dark
@@ -64,6 +65,16 @@ customtkinter.set_default_color_theme("blue")  # Themes: blue (default), dark-bl
 window = customtkinter.CTk()  # create CTk window like you do with the Tk window
 window.geometry("1200x700")
 
+
+#create rows and columns
+window.columnconfigure(0, weight=1, minsize=200)
+window.columnconfigure(1, weight=1, minsize=200)
+window.columnconfigure(2, weight=1, minsize=200)
+window.columnconfigure(3, weight=1, minsize=200)
+window.rowconfigure(0, weight=1, minsize=200)
+window.rowconfigure(1, weight=1, minsize=200)
+window.rowconfigure(2, weight=1, minsize=200)
+
 #text configuration
 Wfont=customtkinter.CTkFont(family='Arial', size=24)
 Wfont=('Arial', 36)
@@ -71,42 +82,38 @@ Wfont=('Arial', 36)
 defoult = customtkinter.CTkFont(family='Calibri', size=14)
 defoult=('Calibri', 14)
 
-
 #create frames
-daily_weather = customtkinter.CTkFrame(master=window, width=300, height=700)
+daily_weather = customtkinter.CTkFrame(master=window, width=350, height=700)
+daily_weather.grid(row=0, column=0,rowspan=2, padx=10, pady=10)
+
+daily_highlight = customtkinter.CTkFrame(master=window, width=830, height=450)
+daily_highlight.grid(row=2, column=1, columnspan=3, padx=10, pady=10)
 
 #create labels
-main_text = customtkinter.CTkLabel(master=window, text="Weather",font=Wfont)
-enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city",font=defoult)
+main_text = customtkinter.CTkLabel(master=window, text="Weather", font=Wfont)
+main_text.grid(row=0, column=0, columnspan=4, pady=20)
+
+enter_your_city = customtkinter.CTkLabel(master=daily_weather, text="Enter your city", font=defoult)
+enter_your_city.grid(row=0, column=0, padx=10, pady=10)
 
 #create buttons
 show_weather = customtkinter.CTkButton(master=daily_weather, text="Show the weather", command=lambda:get_weather(city_entry))
-# clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", command=clear_graph())
+show_weather.grid(row=2, column=0, pady=10)
+
+clear_graph = customtkinter.CTkButton(master=daily_weather, text="Clear Graph", command=clear_graph)
+clear_graph.grid(row=3, column=0, pady=10)
 
 #create entry
 city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
+city_entry.grid(row=1, column=0, pady=10)
 
 #create canvas
-canvas = FigureCanvasTkAgg(Figure(figsize=(4, 3), dpi=90), master=window)
+canvas = FigureCanvasTkAgg(Figure(figsize=(3.5, 3), dpi=90), master=daily_weather)
+canvas.draw()
+canvas.get_tk_widget().grid(row=4, column=0, padx=6, pady=4)
 
-#place entry
-city_entry.place(in_=daily_weather,x=80,y=40)
-
-#place buttons in windows
-show_weather.place(in_=daily_weather,x=80,y=85)
-# clear_graph.place(in_=daily_weather,x=80,y=120)
-
-#place frames in window
-daily_weather.place(relx=0,rely=0)
-
-
-
-
-#place labels in windows
-main_text.place(x=579,y=0)
-enter_your_city.place(x=105,y=10)
-
-
-
+#configure grid rows and columns
+daily_weather.columnconfigure(0, weight=1, minsize=200)
+daily_weather.rowconfigure(4, weight=1, minsize=200)
 
 window.mainloop()
