@@ -92,21 +92,21 @@ city_entry = customtkinter.CTkEntry(master=daily_weather, font=defoult)
 canvas = FigureCanvasTkAgg(Figure(figsize=(3.5, 3), dpi=90), master=window)
 
 #place entry
-city_entry.place(x=15, y=40)
+city_entry.place(in_=daily_weather,x=80,y=40)
 
 #place buttons in windows
-show_weather.place(in_=daily_weather, x=110, y=85)
-clear_graph.place(in_=daily_weather, x=110, y=125)
+show_weather.place(in_=daily_weather,x=80,y=85)
+clear_graph.place(in_=daily_weather,x=80,y=120)
 
 #place frames in window
-daily_weather.place(relx=0, rely=0, anchor='nw')
-daily_highlight.place(relx=0.29, rely=0.35, anchor='center')
+daily_weather.place(relx=0,rely=0)
+
+daily_highlight.place(x=359,y=245)
+
 
 #place labels in windows
 main_text.place(x=579,y=0)
-enter_your_city.place(x=15, y=10)
+enter_your_city.place(x=105,y=10)
 
-#place canvas in window
-canvas.get_tk_widget().place(in_=daily_highlight, relx=0.5, rely=0.5, anchor='center')
 
 window.mainloop()
