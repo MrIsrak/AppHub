@@ -123,8 +123,6 @@ city_entry.grid(row=1, column=0, pady=10)
 tabview = customtkinter.CTkTabview(master=daily_highlight)
 tabview.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-
-
 tabview.add("tab 1")  # add tab at the end
 tabview.add("tab 2")  # add tab at the end
 tabview.set("tab 1")  # set currently visible tab
