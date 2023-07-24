@@ -19,6 +19,19 @@ def main(page):
             num = txt_name.value
             page.clean()
             page.add(ft.Text(num))
+    def row_with_alignment(align: ft.MainAxisAlignment):
+
+        page.add(ft.Column(
+            width=500,
+            controls=[
+                ft.Text(str(align), size=16),
+                ft.Container(
+                    content=ft.Row(options1,options2),
+                    
+                ),
+            ]
+            )
+        )
     # Объявление выпадающих списков
     menu = ft.Dropdown(
         width=100,
@@ -44,20 +57,22 @@ def main(page):
             ft.dropdown.Option("Centimeters"),
         ],
     )
-    txt_name = ft.TextField(label="Your number")
+    txt_name = ft.TextField(label="Your number", autofocus=True)
     
     # Размещение
-    page.add(txt_name, ft.ElevatedButton("click",on_click=convert()))
+    page.add(txt_name)
     page.add(
         ft.Row(
             controls=[
                 menu
             ]
         ),
-        ft.Row(
-            controls=[
-                options1,options2
-            ]
+    page.add(ft.Column(
+        controls=[
+            options1,options2
+                
+        ]
+        )
         )
     )
 

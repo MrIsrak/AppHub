@@ -1,2 +1,2 @@
 # AppHub
- Hub of baisc aplications using Python, Tkinter and GUI modules.
+ Hub of baisc aplications using Python and Django.
