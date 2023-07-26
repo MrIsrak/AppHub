@@ -1,12 +1,12 @@
 import face_recognition
 from PIL import Image, ImageDraw
 import os
+import numpy as np
 
-new_file_path = new_file_name = ''
 
 #Создание пути для открытия файла
 def img_path(img_name):
-    project_root = r"C:\Users\evgen\OneDrive\Рабочий стол\пайтон\AppHub\AppHub\face rec"
+    project_root = os.path.dirname(os.path.abspath(__file__))
     image_path = os.path.join(project_root, "imgs", img_name)
     return image_path
 
@@ -34,7 +34,7 @@ def face_rec():
     del draw_m
 
     #Сохранение в другю папку
-    project_root = r"C:\Users\evgen\OneDrive\Рабочий стол\пайтон\AppHub\AppHub\face rec"
+    project_root = os.path.dirname(os.path.abspath(__file__))
 
     new_file_path = os.path.join(project_root, "output", new_file_name)
 
@@ -48,31 +48,36 @@ def face_rec():
 
     return new_file_path, new_file_name
 
-
+#Кроп лиц
 def face_corp(new_file_path, new_file_name):
-    print("started")
-    faces = face_recognition.load_image_file(new_file_path)
-    face_locations = face_recognition.face_locations(faces)
+    #Открытие файла и нахождение лиц
+    pil_img = Image.open(new_file_path)
+    pil_img_np = np.array(pil_img)
+    face_locations = face_recognition.face_locations(pil_img_np)
 
-    project_root = r"C:\Users\evgen\OneDrive\Рабочий стол\пайтон\AppHub\AppHub\face rec"
-    print("for")
+    project_root = os.path.dirname(os.path.abspath(__file__))
+
+    
+    #Перебор лиц в цикле
     for i, face_location in enumerate(face_locations):
+        i = 1
+
+        #Объявление крайних точек
         top, right, bottom, left = face_location
 
-        # Проверяем, что координаты находятся внутри границ изображения
+        #Проверка на принадлежность
         top = max(0, top)
         left = max(0, left)
-        bottom = min(pil_img.height, bottom)
-        right = min(pil_img.width, right)
+        bottom = min(pil_img_np.shape[0], bottom)
+        right = min(pil_img_np.shape[1], right)
 
-
-        print("crop")
+        #Сохранение
         face_img = pil_img.crop((left, top, right, bottom))
-        print("save")
-        new_face_file_name = f"{new_file_name}_corpd_{i}.png"  # Добавляем индекс для каждого лица
+        name, ext = new_file_name.split(".")
+        new_face_file_name = f"{name}_corpd_{i}.png"  # Добавляем индекс для каждого лица
         new_face_file_path = os.path.join(project_root, "pcorpd", new_face_file_name)
         face_img.save(new_face_file_path)
-        print(new_face_file_path)
+    print(f"seved by '{new_face_file_path}'")
         
 
 
