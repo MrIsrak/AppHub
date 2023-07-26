@@ -2,6 +2,8 @@ import face_recognition
 from PIL import Image, ImageDraw
 import os
 
+new_file_path = new_file_name = ''
+
 #Создание пути для открытия файла
 def img_path(img_name):
     project_root = r"C:\Users\evgen\OneDrive\Рабочий стол\пайтон\AppHub\AppHub\face rec"
@@ -37,13 +39,46 @@ def face_rec():
     new_file_path = os.path.join(project_root, "output", new_file_name)
 
     photo_pil.save(new_file_path)
+
+    # image = Image.open(new_file_path)
+    # image.show()
  
     #Отчет о сохранении
     print(f"saved by {new_file_path} path")
 
+    return new_file_path, new_file_name
+
+
+def face_corp(new_file_path, new_file_name):
+    print("started")
+    faces = face_recognition.load_image_file(new_file_path)
+    face_locations = face_recognition.face_locations(faces)
+
+    project_root = r"C:\Users\evgen\OneDrive\Рабочий стол\пайтон\AppHub\AppHub\face rec"
+    print("for")
+    for i, face_location in enumerate(face_locations):
+        top, right, bottom, left = face_location
+
+        # Проверяем, что координаты находятся внутри границ изображения
+        top = max(0, top)
+        left = max(0, left)
+        bottom = min(pil_img.height, bottom)
+        right = min(pil_img.width, right)
+
+
+        print("crop")
+        face_img = pil_img.crop((left, top, right, bottom))
+        print("save")
+        new_face_file_name = f"{new_file_name}_corpd_{i}.png"  # Добавляем индекс для каждого лица
+        new_face_file_path = os.path.join(project_root, "pcorpd", new_face_file_name)
+        face_img.save(new_face_file_path)
+        print(new_face_file_path)
+        
+
 
 def main():
-    face_rec()
+    new_file_path, new_file_name = face_rec()
+    face_corp(new_file_path, new_file_name)
 
 if __name__ == '__main__':
     main()
