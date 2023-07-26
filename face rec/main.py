@@ -4,6 +4,20 @@ import os
 import numpy as np
 
 
+
+def create_directory():
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    dir_list = ["imgs", "output", "pcorpd"]
+    for dir in dir_list:
+        directory_path = os.path.join(project_root, dir)
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+            print(f"Папка {directory_path} успешно создана.")
+        else:
+            print(f"Папка {directory_path} уже существует.")
+
+
+
 #Создание пути для открытия файла
 def img_path(img_name):
     project_root = os.path.dirname(os.path.abspath(__file__))
@@ -82,6 +96,7 @@ def face_corp(new_file_path, new_file_name):
 
 
 def main():
+    create_directory()
     new_file_path, new_file_name = face_rec()
     face_corp(new_file_path, new_file_name)
 
