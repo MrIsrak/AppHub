@@ -2,7 +2,8 @@ import face_recognition
 from PIL import Image, ImageDraw
 import os
 import numpy as np
-
+import time
+from numba import jit, jit_module
 
 
 def create_directory():
@@ -12,11 +13,9 @@ def create_directory():
         directory_path = os.path.join(project_root, dir)
         if not os.path.exists(directory_path):
             os.makedirs(directory_path)
-            print(f"Папка {directory_path} успешно создана.")
-        else:
-            print(f"Папка {directory_path} уже существует.")
-
-
+            #print(f"Папка {directory_path} успешно создана.")
+        #else:
+            #print(f"Папка {directory_path} уже существует.")
 
 #Создание пути для открытия файла
 def img_path(img_name):
@@ -28,6 +27,8 @@ def img_path(img_name):
 def face_rec():
     #Ввод имени файла
     img_name = input('img_name: ')
+
+    t1 = time.time()
 
     #Загрузка изображения и получение координат
     photo = face_recognition.load_image_file(img_path(f'{img_name}.jpg'))
@@ -59,11 +60,13 @@ def face_rec():
  
     #Отчет о сохранении
     print(f"saved by {new_file_path} path")
-
+    t2 = time.time()
+    print(t2-t1)
     return new_file_path, new_file_name
 
 #Кроп лиц
 def face_corp(new_file_path, new_file_name):
+    print("Crop")
     #Открытие файла и нахождение лиц
     pil_img = Image.open(new_file_path)
     pil_img_np = np.array(pil_img)
@@ -71,7 +74,7 @@ def face_corp(new_file_path, new_file_name):
 
     project_root = os.path.dirname(os.path.abspath(__file__))
 
-    
+    print("for")
     #Перебор лиц в цикле
     for i, face_location in enumerate(face_locations):
         i = 1
@@ -91,14 +94,36 @@ def face_corp(new_file_path, new_file_name):
         new_face_file_name = f"{name}_corpd_{i}.png"  # Добавляем индекс для каждого лица
         new_face_file_path = os.path.join(project_root, "pcorpd", new_face_file_name)
         face_img.save(new_face_file_path)
-    print(f"seved by '{new_face_file_path}'")
+        print(f"seved by '{new_face_file_path}'")
+
+
+def encode_faces():
+    img_name1 = input('img1_name: ')
+    img_name2 = input('img2_name: ')
+
+    img1 = face_recognition.load_image_file(img_path(f'{img_name1}.jpg'))
+    img1_encoded = face_recognition.face_encodings(img1)
+    if not img1_encoded:
+        print(f"No faces found in {img_name1}.jpg")
+        return
+
+    img2 = face_recognition.load_image_file(img_path(f'{img_name2}.jpg'))
+    img2_encoded = face_recognition.face_encodings(img2)
+    if not img2_encoded:
+        print(f"No faces found in {img_name2}.jpg")
+        return
+
+    for encoding in img2_encoded:
+            result = face_recognition.compare_faces(img2_encoded, encoding)
+            print(f"Comparison result for {img_name1} and {img_name2}: {result}")
+
         
-
-
 def main():
     create_directory()
+    #face_rec()
     new_file_path, new_file_name = face_rec()
     face_corp(new_file_path, new_file_name)
+    #encode_faces()
 
 if __name__ == '__main__':
     main()
